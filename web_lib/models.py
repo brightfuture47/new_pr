@@ -26,7 +26,7 @@ class Author(models.Model):
     name = models.CharField (
         verbose_name='Имя автора',
         max_length=200,
-        validators=[validators.RegexValidator(regex='^.*er$', message='Wrong')]
+        validators=[validators.RegexValidator(regex='^.*em$', message='Wrong')]
         )
 
     age = models.PositiveIntegerField (verbose_name='Возраст автора') 
@@ -40,12 +40,15 @@ class Author(models.Model):
 class Book(models.Model):
 
     class Meta:
+        verbose_name ='Книга'
+        verbose_name_plural = 'Книги'
         get_latest_by='published'
 
     title = models.CharField (max_length=200)
     description = models.TextField ()
     page_num = models.PositiveIntegerField()
     published = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
