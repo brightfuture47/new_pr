@@ -1,10 +1,14 @@
 import email
 from email.policy import default
+from itertools import product
+from msilib.schema import Class
 from pyexpat import model
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.core import validators
+
 
 
 class Author(models.Model):
@@ -21,7 +25,7 @@ class Author(models.Model):
         ('c','other'),
     )
 
-    id = models.UUIDField (primary_key = True, db_index=True, default=uuid.uuid4)
+    id = models.UUIDFieldau(primary_key = True, db_index=True, default=uuid.uuid4)
 
     name = models.CharField (
         verbose_name='Имя автора',
@@ -52,5 +56,20 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+class ExtUser(models.Model):
+
+    desc = models.CharField(max_length=200)
+    is_logged = models.BooleanField(default=True)
+    user = models.OneToOneField (User, on_delete = models.SET_NULL, null=True)
+
+class Product(models.Model):
+
+    name =models.CharField(max_length=200)
+
+class Store(models.Model):
+
+    name = models.CharField(max_length=200)
+    products = models.ManyToManyField(Product, related_name='stores')
 
     
