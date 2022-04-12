@@ -25,7 +25,7 @@ class Author(models.Model):
         ('c','other'),
     )
 
-    id = models.UUIDFieldau(primary_key = True, db_index=True, default=uuid.uuid4)
+    id = models.UUIDField(primary_key = True, db_index=True, default=uuid.uuid4)
 
     name = models.CharField (
         verbose_name='Имя автора',
