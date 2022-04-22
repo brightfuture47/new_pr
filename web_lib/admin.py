@@ -1,10 +1,15 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from web_lib.models import Author, Book, Product, Store, ExtUser
 
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ['name','age','email']
+    list_display = ['name','age','email', 'info']
+
+    def info(self, obj):
+        return format_html("<br>".join(obj.info()))
+    info.short_description = "Информация об авторе"
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
