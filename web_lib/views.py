@@ -15,6 +15,10 @@ def main(request):
     #form_post = PostAuthors(request.POST)
     #return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
 
+def create_book(req):
+    pass
+
+
 def authors(request):
     if "author_uuid" in request.GET:
         return redirect('author_id', request.GET["author_uuid"])

@@ -5,6 +5,7 @@
     
     <div class="container">
         <h1> Books </h1>
+        <a class="btn btn-sn btn-info" href="{% url 'web_lib' %}">Создать книгу</a>
         {% if books%}
             {% for book in books %}
                 <p>title: {{book.title}}</p>
