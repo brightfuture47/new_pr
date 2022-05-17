@@ -21,19 +21,6 @@
     {% block content %}
     <div class="container">
         <h1>Welcome to WEB LIB</h1>
-        <br>
-        <form action="{% url 'authors' %}" method="GET">
-            {{ form }}
-            <input type="submit" value="Поиск">
-        </form>
-        <hr>
-        <form action="{% url 'authors' %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-              {{form_post}}
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
     </div>
 
     

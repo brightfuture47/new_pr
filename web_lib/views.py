@@ -1,19 +1,19 @@
+import re
 from django.shortcuts import render, redirect
 from web_lib.models import Author, Book
 
-from.forms import SearchAuthor, PostAuthors
+from.forms import SearchAuthor, PostAuthors, BookForm
+from django.forms import modelform_factory
 
 def main(request):
-    if request.method == "GET":
-        form = SearchAuthor(request.GET)
-        form_post = PostAuthors(request.POST)
-        return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
-"""     return render(request, 'web_lib/main.html') """
 
-""" def form_search(req):
-    if req.method == "GET":
-        form = SearchAuthor(req.GET)
-        return render(req, 'web_lib/main.html',{"form": form}) """
+    book_form = BookForm()
+    return render(request, "web_lib/main.html",{"form": book_form} )
+
+
+    #form = SearchAuthor(request.GET)
+    #form_post = PostAuthors(request.POST)
+    #return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
 
 def authors(request):
     if "author_uuid" in request.GET:
