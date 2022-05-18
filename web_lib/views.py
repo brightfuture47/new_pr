@@ -8,7 +8,7 @@ from django.forms import modelform_factory
 def main(request):
 
     book_form = BookForm()
-    return render(request, "web_lib/main.html",{"form": book_form} )
+    return render(request, "web_lib/main.html", {"form": book_form})
 
 
     #form = SearchAuthor(request.GET)
@@ -16,7 +16,13 @@ def main(request):
     #return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
 
 def create_book(req):
-    pass
+    book_form = BookForm()
+    if req.method == "POST":
+        book_form = BookForm(req.POST)
+        if book_form.is_valid():
+            book_form.save()
+            return redirect('books')
+    return render(req, "web_lib/book_form.html", {"form": book_form})
 
 
 def authors(request):
