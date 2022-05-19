@@ -63,8 +63,13 @@ def update_book(request, pk):
             return redirect('books')
     return render(request, "web_lib/book_form.html", {"form": book_form})
 
-def delete_book(requset, pk):
-    pass
+def delete_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    if request.method == "POST":
+        book.delete()
+        return redirect('books')
+    return render(request, "web_lib/delete_book.html", {'book': book})
+
 
 def about(request):
     return render(request, 'web_lib/about.html')
