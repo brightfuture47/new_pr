@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from web_lib.models import Author, Book
 
 from.forms import SearchAuthor, PostAuthors, BookForm
-from django.forms import modelform_factory
+from django.forms import modelform_factory, widgets
 
 def main(request):
 
@@ -15,14 +15,17 @@ def main(request):
     #form_post = PostAuthors(request.POST)
     #return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
 
-def create_book(req):
+def create_book(request):
     book_form = BookForm()
-    if req.method == "POST":
-        book_form = BookForm(req.POST)
+    if request.method == "POST":
+        book_form = BookForm(request.POST)
         if book_form.is_valid():
-            book_form.save()
+            book = book_form.save(commit=False)
+            book.description = book_form.cleaned_data['description'] + ' ' + book_form.cleaned_data['color']
+            book.save()
+            book_form.save_m2m()
             return redirect('books')
-    return render(req, "web_lib/book_form.html", {"form": book_form})
+    return render(request, "web_lib/book_form.html", {"form": book_form})
 
 
 def authors(request):
