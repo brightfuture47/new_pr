@@ -3,17 +3,36 @@
 {% block content %}
     <div class="container">
         <h1>Books</h1>
-        <a class="btn btn-sn btn-info" href= "{% url 'create_book' %}">Создать книгу</a>
-        <hr>
-        {% if books%}
-            {% for book in books %}
-                <p>title: {{book.title}}</p>
-                <p>description: {{book.description}}</p>
-                <p>date: {{book.published|date:'DATE_FORMAT'}}</p>
-                <hr>
-            {% endfor %}
-        {% else %}
-            <p>No books</p>
-        {% endif %}
+        <div class="card card-block">
+            <a class="btn btn-primary btm-sn btn-block" href= "{% url 'create_book' %}">Создать книгу</a>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">PK</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Дата публикации</th>
+                    <th scope="col">Изменить</th>
+                    <th scope="col">Удалить</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% if books %}
+                        {% for book in books %}
+                            <tr>
+                                <td>{{book.pk}}</td>
+                                <td>{{book.title}}</td>
+                                <td>{{book.description}}</td>
+                                <td>{{book.published|date:'DATE_FORMAT'}}</td>
+                                <td><a class="btn btn-sn btn-info" href= "{% url 'create_book' %}">Обновить</a></td>
+                                <td><a class="btn btn-sn btn-danger" href= "{% url 'create_book' %}">Удалить</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <p>Нет книг</p>
+                    {% endif %}
+                </tbody>
+              </table>
+        </div>
     </div>
 {% endblock %}
