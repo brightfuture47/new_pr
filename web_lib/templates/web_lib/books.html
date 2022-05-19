@@ -24,7 +24,7 @@
                                 <td>{{book.title}}</td>
                                 <td>{{book.description}}</td>
                                 <td>{{book.published|date:'DATE_FORMAT'}}</td>
-                                <td><a class="btn btn-sn btn-info" href= "{% url 'create_book' %}">Обновить</a></td>
+                                <td><a class="btn btn-sn btn-info" href= "{% url 'update_book' book.pk%}">Обновить</a></td>
                                 <td><a class="btn btn-sn btn-danger" href= "{% url 'create_book' %}">Удалить</a></td>
                             </tr>
                         {% endfor %}

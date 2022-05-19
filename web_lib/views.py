@@ -15,19 +15,6 @@ def main(request):
     #form_post = PostAuthors(request.POST)
     #return render(request, 'web_lib/main.html',{"form": form, "form_post": form_post})
 
-def create_book(request):
-    book_form = BookForm()
-    if request.method == "POST":
-        book_form = BookForm(request.POST)
-        if book_form.is_valid():
-            book = book_form.save(commit=False)
-            book.description = book_form.cleaned_data['description'] + ' ' + book_form.cleaned_data['color']
-            book.save()
-            book_form.save_m2m()
-            return redirect('books')
-    return render(request, "web_lib/book_form.html", {"form": book_form})
-
-
 def authors(request):
     if "author_uuid" in request.GET:
         return redirect('author_id', request.GET["author_uuid"])
@@ -50,6 +37,34 @@ def author_id(request, pk):
 def books(request):
     all_books = {'books': Book.objects.all()}
     return render(request, 'web_lib/books.html', all_books)
+
+def create_book(request):
+    book_form = BookForm()
+    if request.method == "POST":
+        book_form = BookForm(request.POST)
+        if book_form.is_valid():
+            book = book_form.save(commit=False)
+            book.description = book_form.cleaned_data['description'] + ' ' + book_form.cleaned_data['color']
+            book.save()
+            book_form.save_m2m()
+            return redirect('books')
+    return render(request, "web_lib/book_form.html", {"form": book_form})
+
+def update_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    book_form = BookForm(instance=book)
+    if request.method == "POST":
+        book_form = BookForm(request.POST, instance=book)
+        if book_form.is_valid():
+            book = book_form.save(commit=False)
+            book.description = book_form.cleaned_data['description'] + ' ' + book_form.cleaned_data['color']
+            book.save()
+            book_form.save_m2m()
+            return redirect('books')
+    return render(request, "web_lib/book_form.html", {"form": book_form})
+
+def delete_book(requset, pk):
+    pass
 
 def about(request):
     return render(request, 'web_lib/about.html')
